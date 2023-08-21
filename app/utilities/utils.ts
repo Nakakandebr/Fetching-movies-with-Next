@@ -1,28 +1,12 @@
-export async function getMovies(){
+export const getMovies =async() =>{
     try{
-        const response = await fetch("/api/get-movies")
-        const result = await response.json();
-        return result;
-
-        
+    const response = await fetch (`/api/get-movies`,{
+        method:'GET',
+    })
+    const result = await response.json();
+    return result;
     }
-    catch (error){
+    catch(error){
         return error;
     }
- 
-}
-
-export async function getMoviesDetails(movieID:number){
-    try{
-        
-        const response = await fetch("/api/get-movies")
-        const result = await response.json();
-        return result;
-
-        
     }
-    catch (error){
-        return error;
-    }
-
-}
