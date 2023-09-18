@@ -9,9 +9,6 @@ export async function GET() {
         return new Response("Movie API token not found", {
             status: 400,
         });
-
-
-        
     }
     try {
         const request = await fetch(`${MOVIE_BASE_URL}/3/movie/popular`, {
