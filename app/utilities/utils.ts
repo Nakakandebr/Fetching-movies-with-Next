@@ -1,6 +1,6 @@
 import exp from "constants";
 
-export const getMovies =async() =>{
+export const fetchMovies =async() =>{
     try{
     const response = await fetch (`/api/get-movies`,{
         method:'GET',
@@ -12,7 +12,7 @@ export const getMovies =async() =>{
         return error;
     }
     }
-export const getCategories = async() =>{
+export const fetchCategories = async() =>{
     try{
         const response = await fetch (`/api/get-genres`,{
             method:'GET',
@@ -25,7 +25,7 @@ export const getCategories = async() =>{
     }
 }
 
- 
+
 
 export async function getMovieDetails(movieId:number) {
     const url=`/api/getMovieDetails/${movieId}`
@@ -41,4 +41,5 @@ export async function getMovieDetails(movieId:number) {
         return error
     }
 }
+
 
