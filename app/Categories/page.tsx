@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { useEffect, useState } from "react";
 import { fetchCategories, fetchMovies as fetchMoviesData } from "../utilities/utils";
 import { NEXT_PUBLIC_IMAGE_BASE_URL } from "../config";
@@ -43,7 +44,7 @@ function MovieList({ movies }: { movies: Movie[] }) {
             <img
               src={`${NEXT_PUBLIC_IMAGE_BASE_URL}${movie.poster_path}`}
               alt={movie.title}
-              className="w-full h-auto"
+              className="w-full h-500 object-cover rounded-md mb-2 gap-4"
             />
           </div>
         </Link>

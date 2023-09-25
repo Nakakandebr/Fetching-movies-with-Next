@@ -1,4 +1,5 @@
 import exp from "constants";
+import {NEXT_PUBLIC_IMAGE_BASE_URL } from "@/app/config";
 
 export const fetchMovies =async() =>{
     try{
@@ -25,7 +26,7 @@ export const fetchCategories = async() =>{
     }
 }
 
-
+  
 
 export async function getMovieDetails(movieId:number) {
     const url=`/api/getMovieDetails/${movieId}`
@@ -42,4 +43,8 @@ export async function getMovieDetails(movieId:number) {
     }
 }
 
+
+export const getNextPublicImageBaseUrl = (path: string) => {
+    return `${NEXT_PUBLIC_IMAGE_BASE_URL}${path}`;
+  };
 

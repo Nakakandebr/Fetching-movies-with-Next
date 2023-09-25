@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client'
 import { useState, useEffect } from "react";
 import { getMovieDetails } from "@/app/utilities/utils";
@@ -28,17 +29,16 @@ const MovieDetail = ({ params: { movieId } }: { params: { movieId: number } }) =
 
     return (
       <div className="movie-detail-container bg-black text-white p-4">
-        <div className="movie-image">
+        <div >
           <img
             src={`${NEXT_PUBLIC_IMAGE_BASE_URL}${poster_path}`}
-            alt={title}
-            className="movie-poster"
+            alt={title} 
           />
         </div>
-        <div className="movie-info">
+        <div>
           <h1 className="text-2xl font-bold">{title}</h1>
           <p className="movie-overview">{overview}</p>
-          <div className="movie-metadata">
+          <div >
             <p>
               <span className="font-bold">Release Date:</span> {release_date}
             </p>
