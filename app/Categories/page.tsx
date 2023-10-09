@@ -1,10 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
+// /* eslint-disable @next/next/no-img-element */
 import { useEffect, useState } from "react";
-import { fetchCategories, fetchMovies as fetchMoviesData } from "../utilities/utils";
+import { fetchCategories, fetchMovies } from "../utilities/utils";
 import { NEXT_PUBLIC_IMAGE_BASE_URL } from "../config";
 import Link from "next/link";
 
-interface Category {
+interface Genre {
   id: number;
   name: string;
 }
@@ -16,61 +17,32 @@ interface Movie {
   poster_path: string;
 }
 
-function GenreFilter({ genres, selectedGenre, onGenreClick }: { genres: Category[] | null; selectedGenre: number | null; onGenreClick: (genreId: number) => void }) {
-  return (
-    <div className="flex flex-wrap gap-2">
-      {genres &&
-        genres.map((genre) => (
-          <div
-            key={genre.id}
-            className={`bg-blue-400 px-4 py-2 rounded-full cursor-pointer ${
-              selectedGenre === genre.id ? "bg-yellow-500" : ""
-            }`}
-            onClick={() => onGenreClick(genre.id)}
-          >
-            {genre.name}
-          </div>
-        ))}
-    </div>
-  );
-}
-
-function MovieList({ movies }: { movies: Movie[] }) {
-  return (
-    <div className="grid grid-cols-5 gap-4 mt-10">
-      {movies.map((movie) => (
-        <Link href={`/movie/${movie.id}`} key={movie.title}>
-          <div key={movie.id} className="">
-            <img
-              src={`${NEXT_PUBLIC_IMAGE_BASE_URL}${movie.poster_path}`}
-              alt={movie.title}
-              className="w-full h-500 object-cover rounded-md mb-2 gap-4"
-            />
-          </div>
-        </Link>
-      ))}
-    </div>
-  );
-}
-
-export default function CategoriesList() {
-  const [genres, setGenres] = useState<Category[] | null>(null);
+export default function GenreList() {
+  const [genres, setGenres] = useState<Genre[] | null>(null);
   const [selectedGenre, setSelectedGenre] = useState<number | null>(null);
   const [movies, setMovies] = useState<Movie[]>([]);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchGenres = async () => {
       try {
         const genreData = await fetchCategories();
         setGenres(genreData.genres);
-        const movieData = await fetchMoviesData();
-        setMovies(movieData.results);
       } catch (error) {
-        console.error("Error while getting  data:", error);
+        console.error("Error fetching genres:", error);
       }
     };
 
-    fetchData();
+    const fetchMoviesData = async () => {
+      try {
+        const movieData = await fetchMovies();
+        setMovies(movieData.results);
+      } catch (error) {
+        console.error("Error fetching movies:", error);
+      }
+    };
+
+    fetchGenres();
+    fetchMoviesData();
   }, []);
 
   const handleGenreClick = (genreId: number) => {
@@ -83,9 +55,39 @@ export default function CategoriesList() {
 
   return (
     <div className="p-4">
-    
-      <GenreFilter genres={genres} selectedGenre={selectedGenre} onGenreClick={handleGenreClick} />
-      <MovieList movies={filteredMovies} />
+      <h2 className="text-3xl text-center font-semibold mb-4 text-white">Genres</h2>
+      <div className="flex flex-wrap gap-2">
+        {genres &&
+          genres.map((genre) => (
+            <div
+              key={genre.id}
+              className={`bg-gray-400 px-4 py-2 rounded-full cursor-pointer ${
+                selectedGenre === genre.id ? "bg-yellow-500" : ""
+              }`}
+              onClick={() => handleGenreClick(genre.id)}
+            >
+              {genre.name}
+            </div>
+          ))}
+      </div>
+
+      <div className="grid grid-cols-5 gap-4 mt-10">
+        {filteredMovies.length > 0 ? (
+          filteredMovies.map((movie) => (
+            <Link href={`/movie/${movie.id}`} key={movie.title}>
+              <div key={movie.id} className="">
+                <img
+                  src={`${NEXT_PUBLIC_IMAGE_BASE_URL}${movie.poster_path}`}
+                  alt={movie.title}
+                  className="w-full h-auto"
+                />
+              </div>
+            </Link>
+          ))
+        ) : (
+          <p className="text-center text-black mt-10">No movies available for the selected genre.</p>
+        )}
+      </div>
     </div>
   );
 }

@@ -1,5 +1,5 @@
 'use client';
-import MovieSearch from "./nav/page";
+import MovieSearch from "./Navbar/page";
 import Footer from "./Footer/pages";
 import SliderCarousel from "./SliderCarousel/page";
 import CategoroesList from "./Categories/page";

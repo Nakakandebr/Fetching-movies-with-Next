@@ -44,7 +44,8 @@ export async function getMovieDetails(movieId:number) {
 }
 
 
-export const getNextPublicImageBaseUrl = (path: string) => {
+export const getNextPublicImageBaseUrl = 
+(path: string) => {
     return `${NEXT_PUBLIC_IMAGE_BASE_URL}${path}`;
   };
 
